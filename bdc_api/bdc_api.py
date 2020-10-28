@@ -211,7 +211,13 @@ class BdcApi(object):
         post_data = {'filepaths': ','.join(files)}
         headers = {'Accept': ', '.join(self.QUERY_ACCEPT_TYPES)}
         response = self._send_post(self.URL_QUERY, post_data, headers=headers)
-        return json.loads(response.content)['query_id']
+        response = json.loads(response.content)
+        if 'query_id' in response:
+            return response['query_id']
+        elif 'error_message' in response:
+            raise BdcApiException(response['error_message'])
+        else:
+            raise BdcApiException('Unknown response received when requesting files!')
 
     def start_datacollection_query(self, datacollection):
         """Initiate a query to download all files associated with a datacollection.
@@ -234,7 +240,13 @@ class BdcApi(object):
         post_data = {'datacollection': datacollection}
         headers = {'Accept': ', '.join(self.QUERY_ACCEPT_TYPES)}
         response = self._send_post(self.URL_QUERY, post_data, headers=headers)
-        return json.loads(response.content)['query_id']
+        response = json.loads(response.content)
+        if 'query_id' in response:
+            return response['query_id']
+        elif 'error_message' in response:
+            raise BdcApiException(response['error_message'])
+        else:
+            raise BdcApiException('Unknown response received when requesting files!')
 
     def check_query_progress(self, query_id):
         """Check the progress query.
@@ -259,8 +271,11 @@ class BdcApi(object):
             raise BdcApiException(f'{query_id} is not a valid ObjectId!')        
         response = self._send_get('{0}/{1}'.format(self.URL_PROGRESS, query_id))
         response = json.loads(response.content)
-        return self.QueryInfo(progress=response['progress'], 
-                        status=response['job_status'])
+        if 'errormessage' in response:
+            raise BdcApiException(response['errormessage'])
+        else:
+            return self.QueryInfo(progress=response['progress'], 
+                            status=response['job_status'])
 
     def save_file(self, query_id, jupyterhub=False, local_path=""):
         """This function will save the result of a query to the given directory
