@@ -1,4 +1,41 @@
-- Detailed documentation on how to use this package can be found on relevant BDC web service websites. Please contact package author for more details.
+## BDC Python API
+
+### Install:
+
+- Start a virtual environment and install as shown below:
+```
+python3 -m venv bdc_api_install
+source bdc_api_install/bin/activate
+python setup.py install
+```
+
+### Tests:
+
+- Run the following to test the application:
+
+  ```
+  python -m unittest
+  ```
+
+### Documentation:
+
+- Latest documentation is found by opening `docs/html_prebuilt/index.html` in a browser.
+
+- For developers, you can rebuild the documentation if needed as follows:
+
+  ```
+  cd docs
+  pip install -U sphinx-build
+  make html
+  ```
+
+  It can then be accessed under `docs/_build/html`.
+
+### Notes:
+
+- Detailed documentation on how to use this package can be found on relevant BDC web service websites. Please contact BDC/MINOS team at LBL for more details.
+
+### Licensing:
 
 - The Berkeley Data Cloud python API ("BDC python API") is released under the license below and is subject to the following licensing terms:
 

@@ -280,4 +280,5 @@ class TestBdcApiInterface(unittest.TestCase):
 #         assert self.api.check_query_progress(queryID).progress == '0%'
 #         assert self.api.check_query_progress(queryID).status == JobStatus.failed
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()
