@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
         name="bdc_api",
-        version="v1.0.2",
+        version="v1.1",
         data_files = [("", ["LICENSE.txt"])],
         install_requires=['pymongo==2.9.5'],
         author="Hamdy Elgammal",

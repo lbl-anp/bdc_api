@@ -1,15 +1,27 @@
-## BDC Python API
+# BDC Python API
 
-### Install:
+## Installation:
 
 - Start a virtual environment and install as shown below:
-```
-python3 -m venv bdc_api_install
-source bdc_api_install/bin/activate
-python setup.py install
-```
 
-### Tests:
+  ```
+  python3 -m venv bdc_api_install
+  source bdc_api_install/bin/activate
+  ```
+
+- If installing through `pip`, run:
+
+  ```
+  pip install git+https://github.com/lbl-anp/bdc_api.git
+  ```
+
+- If installing from repo clone, just run:
+
+  ```
+  python setup.py install
+  ```
+
+## Tests:
 
 - Run the following to test the application:
 
@@ -17,9 +29,9 @@ python setup.py install
   python -m unittest
   ```
 
-### Documentation:
+## Documentation:
 
-- Latest documentation is found by opening `docs/html_prebuilt/index.html` in a browser.
+- Latest documentation is found by cloning the repo then opening `docs/html_prebuilt/index.html` in a browser.
 
 - For developers, you can rebuild the documentation if needed as follows:
 
@@ -31,9 +43,7 @@ python setup.py install
 
   It can then be accessed under `docs/_build/html`.
 
-### Notes:
-
-- Detailed documentation on how to use this package can be found on relevant BDC web service websites. Please contact BDC/MINOS team at LBL for more details.
+- More detailed documentation on how to use this package can be found on relevant BDC web service websites. Please contact BDC/MINOS team at LBL for more details.
 
 ### Licensing:
 
