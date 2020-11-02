@@ -8,7 +8,7 @@ setuptools.setup(
         version="v1.1",
         data_files = [("", ["LICENSE.txt"])],
         install_requires=['pymongo==2.9.5', 
-            'requests'],
+            'requests','six'],
         author="Hamdy Elgammal",
         author_email="hhelgammal@lbl.gov",
         long_description=long_description,

@@ -11,7 +11,7 @@ BDC Python API Documentation
    :maxdepth: 2
    :caption: Contents:
    
-   modules/details.rst
+   modules/bdc_api.rst
 
 
 
@@ -20,5 +20,4 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

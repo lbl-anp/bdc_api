@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python API documentation &#8212; BDC Python API v1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="BDC Python API Documentation" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="BDC Python API Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">BDC Python API v1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Python API documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-api-documentation">
+<h1>Python API documentation<a class="headerlink" href="#python-api-documentation" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="bdc_api.BdcApi">
+<em class="property">class </em><code class="sig-prename descclassname">bdc_api.</code><code class="sig-name descname">BdcApi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">api_key</span></em>, <em class="sig-param"><span class="n">hostname</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class responsible for handling all API calls.</p>
+<dl class="py class">
+<dt id="bdc_api.BdcApi.QueryInfo">
+<em class="property">class </em><code class="sig-name descname">QueryInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">progress</span></em>, <em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.QueryInfo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="bdc_api.BdcApi.QueryInfo.__getnewargs__">
+<code class="sig-name descname">__getnewargs__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.QueryInfo.__getnewargs__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.QueryInfo.__new__">
+<em class="property">static </em><code class="sig-name descname">__new__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_cls</span></em>, <em class="sig-param"><span class="n">progress</span></em>, <em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.QueryInfo.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new instance of QueryInfo(progress, status)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.QueryInfo.__repr__">
+<code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.QueryInfo.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a nicely formatted representation string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.QueryInfo.progress">
+<em class="property">property </em><code class="sig-name descname">progress</code><a class="headerlink" href="#bdc_api.BdcApi.QueryInfo.progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.QueryInfo.status">
+<em class="property">property </em><code class="sig-name descname">status</code><a class="headerlink" href="#bdc_api.BdcApi.QueryInfo.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">api_key</span></em>, <em class="sig-param"><span class="n">hostname</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize username, API key, and session information.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">username</dt>
+<dd class="field-odd"><p>valid API username.</p>
+</dd>
+<dt class="field-even">api_key</dt>
+<dd class="field-even"><p>valid API key generated from the wesbite under <cite>REST API Key Manager</cite>.</p>
+</dd>
+<dt class="field-odd">hostname</dt>
+<dd class="field-odd"><p>Hostname to be used throughout the session (e.g: <cite>https://minos.lbl.gov</cite>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>New <cite>BdcApi</cite> object.</p></li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>None.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="bdc_api.BdcApi.__weakref__">
+<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#bdc_api.BdcApi.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.check_query_progress">
+<code class="sig-name descname">check_query_progress</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.check_query_progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the progress query.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">query_id</dt>
+<dd class="field-odd"><p>Query ID from one of the <cite>start_datacollection_query</cite> 
+or <cite>start_files_query</cite> functions.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Named tuple object QueryInfo where the <cite>progress</cite> field
+contains the percentage progress of the query and the <cite>status</cite>
+field includes the job status.</p></li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.get_datacollections">
+<code class="sig-name descname">get_datacollections</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_numbers</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">domains</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">time_limits</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">limit</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.get_datacollections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all available datacollections, optionally filtered.</p>
+<p>Parameters (all optional):</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">task_numbers</dt>
+<dd class="field-odd"><p>A list of task number names.</p>
+</dd>
+<dt class="field-even">domains</dt>
+<dd class="field-even"><p>A list of domain names.</p>
+</dd>
+<dt class="field-odd">time_limits</dt>
+<dd class="field-odd"><p>A list of 2 timestamps.</p>
+</dd>
+<dt class="field-even">limit</dt>
+<dd class="field-even"><p>Maximum number of datacollections to return.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>List of datacollection names.</p></li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint) or when no datacollections are found.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.get_domains">
+<code class="sig-name descname">get_domains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_ID</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.get_domains" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Get the domains associated with all tasks (associated with the user),</dt><dd><p>or just those associated with a specified task.</p>
+</dd>
+</dl>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">task_ID</dt>
+<dd class="field-odd"><p>Optional task ObjectID.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Dictionary of task names, whose values are their associated domain names.</p></li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.get_files">
+<code class="sig-name descname">get_files</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datacollections</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">extensions</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">limit</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.get_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get file names from all or selected datacollections.</p>
+<p>Parameters (optional):</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">datacollections</dt>
+<dd class="field-odd"><p>list of datacollection names whose filenames are desired.</p>
+</dd>
+<dt class="field-even">limit</dt>
+<dd class="field-even"><p>limit on data collections returned (defaults to 0, meaning no limit).</p>
+</dd>
+<dt class="field-odd">extensions</dt>
+<dd class="field-odd"><p>comma-separated string of desired extensions (e.g: ‘json,txt’)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul>
+<li><p>Dictionary of the form</p>
+<blockquote>
+<div><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;datacollection_1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;filename1&quot;</span><span class="p">,</span> <span class="s2">&quot;filename2&quot;</span><span class="p">],</span>
+    <span class="nt">&quot;datacollection_2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;filename3&quot;</span><span class="p">,</span> <span class="s2">&quot;filename4&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.get_task_numbers">
+<code class="sig-name descname">get_task_numbers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.get_task_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the task numbers associated with the logged-in user’s organizations.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>None.</p></li>
+</ul>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul>
+<li><p>Dictionary with keys in the format <a href="#id1"><span class="problematic" id="id2">`</span></a>{task name}/{task number}’
+and value being a dict including POCs and the ID of the task. For e.g:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Electromagnetic / 2.1&quot;</span><span class="p">:</span> 
+    <span class="p">{</span><span class="nt">&quot;POCS&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="nt">&quot;laboratory&quot;</span><span class="p">:</span> <span class="s2">&quot;LBNL&quot;</span><span class="p">,</span> <span class="nt">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="p">}],</span> 
+     <span class="nt">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;5d9e26ada81660b57e387f49&quot;</span><span class="p">}</span>
+     <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.save_file">
+<code class="sig-name descname">save_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query_id</span></em>, <em class="sig-param"><span class="n">jupyterhub</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">local_path</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.save_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will save the result of a query to the given directory
+on local disk, or, if the jupyterhub flag is set to True, to the user’s
+JupyterHub home directory. The latter requires that the JupyterHub home
+directory has been created and is accessible to the Apache user that
+runs the service.</p>
+<p>The response will contain either a success or error message returned by
+the service.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">query_id</dt>
+<dd class="field-odd"><p>Query ID from one of the <cite>start_datacollection_query</cite> or
+<cite>start_files_query</cite> functions.</p>
+</dd>
+<dt class="field-even">jupyterhub</dt>
+<dd class="field-even"><p>Whether or not the API is being run from JupyterHub
+(default False).</p>
+</dd>
+<dt class="field-odd">local_path</dt>
+<dd class="field-odd"><p>A path to a directory on local disk, which will only be
+considered if the API is not being run from JupyterHub.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul>
+<li><p>Upon success if the jupyterhub flag is True, will return a dict
+with the success message:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;message&quot;</span><span class="p">:</span> 
+    <span class="s2">&quot;Successfully moved query results to home directory. Filename is: download_5d9407266362395834cdbfbe.zip&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Upon success if the jupyterhub flag is False, will return a dict
+with the success message:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;message&quot;</span><span class="p">:</span>
+    <span class="s2">&quot;Successfully downloaded query results to /path/on/disk. Filename is: download_5d9407266362395834cdbfbe.zip&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Upon failure, will raise <cite>BdcApiException</cite>.</p>
+</li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BdcApiException on problematic requests (e.g. malformed inputs or
+issues reaching the API endpoint).</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.start_datacollection_query">
+<code class="sig-name descname">start_datacollection_query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datacollection</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.start_datacollection_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate a query to download all files associated with a datacollection.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">datacollection</dt>
+<dd class="field-odd"><p>name of datacollection to get data for.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Query ID with which to check query progress or request the download.</p></li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bdc_api.BdcApi.start_files_query">
+<code class="sig-name descname">start_files_query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bdc_api.BdcApi.start_files_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate a query to download specified files.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">files</dt>
+<dd class="field-odd"><p>List of desired file names as selected from <cite>get_files</cite>.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Query ID with which to check query progress or request the download.</p></li>
+</ul>
+</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>BdcApiException on problematic requests (e.g. malformed inputs or </dt><dd><p>issues reaching the API endpoint).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">BDC Python API Documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/bdc_api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="BDC Python API Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">BDC Python API v1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Python API documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, MINOS Development Team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.0.
+    </div>
+  </body>
+</html>

@@ -1,5 +1,9 @@
 # BDC Python API
 
+## Supported python versions:
+
+- Tested under Python 3.8.5 and Python 3.9.
+
 ## Installation:
 
 - Start a virtual environment and install as shown below:
@@ -37,7 +41,7 @@
 
   ```
   cd docs
-  pip install -U sphinx-build
+  pip install -U sphinx
   make html
   ```
 
