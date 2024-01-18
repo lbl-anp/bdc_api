@@ -7,7 +7,7 @@ setuptools.setup(
         name="bdc_api",
         version="v1.1",
         data_files = [("", ["LICENSE.txt"])],
-        install_requires=['pymongo==2.9.5', 
+        install_requires=['pymongo',
             'requests','six'],
         author="Hamdy Elgammal",
         author_email="hhelgammal@lbl.gov",
