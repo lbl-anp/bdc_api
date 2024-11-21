@@ -3,6 +3,7 @@ from __future__ import absolute_import
 # import os
 # import shutil
 from bdc_api import *
+from unittest.mock import mock_open
 from unittest.mock import patch
 
 import unittest
@@ -213,6 +214,90 @@ class TestBdcApiInterface(unittest.TestCase):
         query_id = 'not_an_ID'
         self.assertRaises(BdcApiException, self.api.check_query_progress, 
                 query_id)
+
+    @patch('bdc_api.BdcApi._send_post')
+    @patch('bdc_api.BdcApi._yield_jsons_in_directory')
+    @patch('builtins.open', new_callable=mock_open, read_data='')
+    def test_validate_catalogs_success_1(self, mock_file, mock_yield,
+                                         mock_post):
+        """Ensure that validate_catalogs works as expected on a
+        directory input"""
+        mock_response_json = {
+            'all_valid': True,
+            'results': {
+                '/path/to/valid0.json': {
+                    'is_valid': True,
+                    'warnings': '',
+                    'errors': '',
+                },
+                '/path/to/valid1.json': {
+                    'is_valid': True,
+                    'warnings': '',
+                    'errors': '',
+                },
+            },
+        }
+        mock_post.return_value.json.return_value = mock_response_json
+
+        mock_yield.return_value = mock_response_json['results'].keys()
+
+        expected_results = mock_response_json['results']
+        file_names_and_results = list(self.api.validate_catalogs('/tmp'))
+        for file_name, result in file_names_and_results:
+            self.assertIn(file_name, expected_results)
+            expected_result = expected_results.pop(file_name)
+            self.assertEqual(expected_result, result)
+        self.assertFalse(expected_results)
+
+    @patch('bdc_api.BdcApi._send_post')
+    @patch('os.path.isfile')
+    @patch('os.path.exists')
+    @patch('builtins.open', new_callable=mock_open, read_data='')
+    def test_validate_catalogs_success_2(self, mock_file, mock_exists,
+                                         mock_isfile, mock_post):
+        """Ensure that validate_catalogs works as expected on a file
+        input"""
+        mock_response_json = {
+            'all_valid': False,
+            'results': {
+                '/path/to/invalid.json': {
+                    'is_valid': False,
+                    'warnings': 'Sample warning',
+                    'errors': 'Sample error',
+                },
+            },
+        }
+        mock_post.return_value.json.return_value = mock_response_json
+
+        mock_exists.return_value = True
+        mock_isfile.return_value = True
+
+        expected_results = mock_response_json['results']
+        file_names_and_results = list(
+            self.api.validate_catalogs('/path/to/invalid.json'))
+        for file_name, result in file_names_and_results:
+            self.assertIn(file_name, expected_results)
+            expected_result = expected_results.pop(file_name)
+            self.assertEqual(expected_result, result)
+        self.assertFalse(expected_results)
+
+    @patch('bdc_api.BdcApi._send_post')
+    @patch('bdc_api.BdcApi._yield_jsons_in_directory')
+    @patch('builtins.open', new_callable=mock_open, read_data='')
+    def test_validate_catalogs_fail_1(self, mock_file, mock_yield, mock_post):
+        """Ensure that validate_catalogs fails as expected when the API
+        call raises an exception"""
+
+        def raise_exception(*args, **kwargs):
+            raise Exception('Test exception.')
+
+        mock_post.side_effect = raise_exception
+
+        mock_yield.return_value = ['dummy.json']
+
+        with self.assertRaises(BdcApiException) as cm:
+            list(self.api.validate_catalogs('/tmp'))
+        self.assertEqual(str(cm.exception), 'Test exception.')
 
 if __name__ == '__main__':
     unittest.main()
