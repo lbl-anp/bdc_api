@@ -30,6 +30,7 @@ class BdcApi(object):
     URL_QUERY='minos_restapi/request_data'
     URL_PROGRESS='minos_restapi/progress'
     URL_DOWNLOAD='minos_restapi/download'
+    URL_VALIDATE_CATALOGS='minos_restapi/validate_catalogs'
     COMPLETE_QUERY = '100%'
     QUERY_ACCEPT_TYPES = ['application/zip', 'application/x-hdf']
     COMPLETE_QUERY_STATUS = ['failed', 'cancelled', 'failed (no read access to any data included)',
@@ -333,6 +334,101 @@ class BdcApi(object):
             response = self._save_file_local(str(query_id), local_path)
         return response
 
+    def validate_catalogs(self, file_or_dir_path, batch_size=10):
+        """Check whether the given JSON file is a valid catalog, or
+        whether the JSONs in the given directory are valid catalogs.
+
+        Parameters:
+
+            :file_or_dir_path: A relative or absolute file path to a
+                               JSON file or a directory (to be
+                               recursively traversed for JSONs)
+            :batch_size: The number of JSONs to be opened (in memory)
+                         and sent to the API at once (default 10)
+
+        Returns:
+
+            - Generator of tuples (JSON file path (str), validation
+              result (dict)). Example:
+
+                  (
+                      "path/to/catalog1.json",
+                      {
+                          "is_valid": True,
+                          "warnings": "",
+                          "errors": ""
+                      }
+                  )
+
+                  (
+                      "path/to/nested/catalog2.json",
+                      {
+                          "is_valid": False,
+                          "warnings": "",
+                          "errors": "Sample error message"
+                      }
+                   )
+
+        Raises:
+
+            - BdcApiException, if any errors occur.
+        """
+
+        def _get_validation_results_for_files(paths):
+            """Open the files at the given paths, send them to the API
+            endpoint for catalog validation, close them, and return the
+            validation results."""
+            json_content_type = 'application/json'
+            files = {}
+            try:
+                for path in paths:
+                    f = open(path)
+                    files[path] = (path, f, json_content_type)
+            except Exception as e:
+                raise BdcApiException('Failed to open a file.') from e
+
+            response, exc = None, None
+            try:
+                response = self._send_post(
+                    self.URL_VALIDATE_CATALOGS, {}, files=files)
+            except Exception as e:
+                exc = e
+
+            # Close file handles even if the request failed.
+            for _, file_data in files.items():
+                try:
+                    file_handle = file_data[1]
+                    file_handle.close()
+                except Exception as e:
+                    pass
+
+            if exc is not None:
+                raise BdcApiException(exc)
+
+            try:
+                results = response.json()['results']
+                return results.items()
+            except Exception as e:
+                raise BdcApiException(e)
+
+        if not os.path.exists(file_or_dir_path):
+            raise BdcApiException(f'{file_or_dir_path} is not a valid path.')
+        if os.path.isfile(file_or_dir_path):
+            file_paths = [file_or_dir_path]
+            yield from _get_validation_results_for_files(file_paths)
+        elif os.path.isdir(file_or_dir_path):
+            file_paths = []
+            for file_path in self._yield_jsons_in_directory(file_or_dir_path):
+                file_paths.append(file_path)
+                if len(file_paths) == batch_size:
+                    yield from _get_validation_results_for_files(file_paths)
+                    file_paths = []
+            if file_paths:
+                yield from _get_validation_results_for_files(file_paths)
+        else:
+            raise BdcApiException(
+                f'{file_or_dir_path} is neither a file nor a directory.')
+
     def _save_file_local(self, query_id, path):
         """Helper function that attempts to save the results of the given query
         to the given directory on local disk.
@@ -445,14 +541,15 @@ class BdcApi(object):
             raise BdcApiException('Error occurred while making request: {0}',
                     json.loads(response.content)['errormessage'])
         return response
-    
-    def _send_post(self, url, post_data, headers={}):
+
+    def _send_post(self, url, post_data, files={}, headers={}):
         """Helper function to send POST requests.
 
         Parameters:
 
             :url: of API endpoint suffix as a string.
             :post_data: Data to attach to POST request.
+            :files: Files to include in the request.
             :headers: Request headers to include.
 
         Returns:
@@ -466,9 +563,15 @@ class BdcApi(object):
         """
         headers.update({'Authorization': self.auth_header})
         response = None
+        kwargs = {
+            'data': post_data,
+            'headers': headers,
+        }
+        if files:
+            kwargs['files'] = files
         try:
             response = self.session.post(
-                '{0}/{1}/'.format(self._host, url), data=post_data, headers=headers)
+                '{0}/{1}/'.format(self._host, url), **kwargs)
         except Exception as e:
             if not response:
                 raise BdcApiException('Error sending request to host server: {0}', e)
@@ -480,3 +583,26 @@ class BdcApi(object):
             raise BdcApiException('Error occurred while making request: {0}',
                     json.loads(response.content)['errormessage'])
         return response
+
+    @staticmethod
+    def _yield_jsons_in_directory(directory_path):
+        """Return a generator of paths to JSON files in the given
+        directory.
+
+        Parameters:
+
+            :directory_path: The path to a directory to search within
+
+        Returns:
+
+            - A generator of paths to JSON files relative to the
+              directory
+
+        Raises:
+            - Exception, if any errors occur.
+        """
+        for root, _, file_names in os.walk(directory_path):
+            for file_name in file_names:
+                if not file_name.endswith('.json'):
+                    continue
+                yield os.path.join(root, file_name)
